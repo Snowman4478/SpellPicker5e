@@ -1,6 +1,5 @@
-from flask import render_template, url_for, flash, redirect
-from app import app
-from app.forms import CharCreateForm
+from flask import render_template, url_for, flash, redirect, current_app as app
+#from app.forms import CharCreateForm
 
 @app.route("/")
 @app.route("/home")
@@ -11,13 +10,13 @@ def home():
 def about():
     return render_template('about.html')
 
-@app.route("/char-create", methods=['GET', 'POST'])
+""" @app.route("/char-create", methods=['GET', 'POST'])
 def charcreate():
     form = CharCreateForm()
     if form.validate_on_submit():
         flash(f'Created Chracter!', 'success')
         return redirect(url_for('created'))
-    return render_template('charcreate.html', title='Create Character', form=form)
+    return render_template('charcreate.html', title='Create Character', form=form) """
 
 @app.route("/random-char")
 def randomchar():
