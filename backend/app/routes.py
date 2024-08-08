@@ -2,9 +2,10 @@ from flask import render_template, url_for, flash, redirect, current_app as app
 #from app.forms import CharCreateForm
 
 @app.route("/")
-@app.route("/home")
+@app.route("/home", methods=['GET'])
 def home():
-    return render_template('home.html')
+    #return render_template('home.html')
+    return {"title" : "D&D Application", "body": "Hello!"}
 
 @app.route("/about")
 def about():
