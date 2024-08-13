@@ -1,0 +1,35 @@
+.about-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.about-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.about-header h1 {
+    font-size: 36px;
+    color: #333;
+}
+
+.about-introduction,
+.about-team {
+    margin-bottom: 30px;
+}
+
+.about-mission h2,
+.about-team h2 {
+    font-size: 28px;
+    color: #444;
+}
+
+.about-team ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.about-team li {
+    margin: 10px 0;
+}

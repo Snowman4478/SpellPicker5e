@@ -1,21 +1,17 @@
-import { useEffect, useState } from 'react'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css'
+import Home from './components/Home'
+import About from './components/About';
 
 function App() {
-  const [initialData, setInitialData] = useState<{title?: string; body?: string }>({});
-  
-  useEffect(()=>{
-    fetch('http://localhost:5000/home').then(
-      response => response.json()
-    )
-    .then(data => setInitialData(data))
-  }, []);
   
   return (
-    <div className='App'>
-      <h1>{initialData.title}</h1>
-      <h2>{initialData.body}</h2>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} /> 
+      </Routes>
+    </Router>
   )
 }
 
