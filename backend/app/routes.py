@@ -1,4 +1,5 @@
 from flask import render_template, url_for, flash, redirect, current_app as app
+from app import db
 #from app.forms import CharCreateForm
 
 @app.route("/")
