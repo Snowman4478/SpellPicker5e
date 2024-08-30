@@ -1,3 +1,4 @@
 .env
 __pycache__
 DnDChar-Env/
+backend/app/scripts
