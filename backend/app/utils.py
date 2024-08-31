@@ -1,3 +1,1 @@
 from app.data_access import get_random_spells, get_random_themed_spells
-
-
