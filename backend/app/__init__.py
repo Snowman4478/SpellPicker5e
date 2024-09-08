@@ -1,7 +1,6 @@
 from flask import Flask
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
-from config import Config
 
 db = SQLAlchemy()
 
@@ -17,10 +16,7 @@ def create_app():
     CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}})
 
     with app.app_context():
-        from . import routes, models
-    
-
-    with app.app_context():
+        from .models import Spell
         db.create_all()
     
 

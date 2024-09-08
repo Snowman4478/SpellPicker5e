@@ -1,4 +1,3 @@
-from ..data_access import get_random_spells, get_random_themed_spells
 import math
 
 #Some classes have the same number of cantrips at the same levels, thus a function
@@ -57,7 +56,6 @@ def bard_numb_of_spells(level, ability_modifier):
                           11: 15, 12: 15, 13: 16, 14: 18, 15: 19, 16: 19, 17: 20, 18: 22, 19: 22, 20: 22}
     
     return bard_spells_known[level]
-
 
 # classes that know the whole spell list of their class will get spells equal to the amount able to be prepared (level + spellcast modifier, default 5)
 
