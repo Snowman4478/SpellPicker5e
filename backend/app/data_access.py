@@ -13,15 +13,14 @@ def get_random_spells(class_type, level, number):
 
         class_col = getattr(Spell, class_type.lower())
 
-        query = (Spell.query
+        return (Spell.query
                 .filter(class_col == True,
                         Spell.level == level)
                 .order_by(db.func.random())
                 .limit(number)
                 .all()
         )
-        print(query[0].spell_name)
-        print(query[0].m)
+        
 
 #Get random spells with a theme of a certain level
 def get_random_themed_spells(class_type, level, number, damage_type=None, school=None):
@@ -30,18 +29,50 @@ def get_random_themed_spells(class_type, level, number, damage_type=None, school
 
         class_col = getattr(Spell, class_type.lower())
 
-        query = Spell.query.filter(class_col == True)  # filtering by class
+        query = Spell.query.filter(class_col == True, Spell.level == level)  # filtering by class and level (needed)
 
-        if school is not None:
-                query = query.filter(Spell.school == school)   # checking to see if theres a school of magic filter
+        if school != None:
+                query = query.filter(Spell.school == school)   # school of magic filter
+        
 
-        if damage_type is not None:
-                query = query.filter(Spell.damage_type == damage_type) # filtering by damage type
+        if damage_type != None:
+                damage_type = damage_type.capitalize()
+                damage_query = query.filter(Spell.damage_type.contains(damage_type)) # filtering by damage type
+        else:
+              damage_query = query  #if no damage type then its just the prev query
 
-        return (Spell.query
-                .filter(Spell.class_col == True,
-                        Spell.level == level)
+
+        results = damage_query.all()   # our spells
+
+        
+
+        # Store ids of already selected spells
+        selected_spell_ids = [spell.spell_name for spell in results]
+
+
+        if len(results) < number:  #If both damage and school filter is too little we remove damage filter
+                remaining_needed = number - len(results)
+                no_damage_query = (Spell.query
+                .filter(Spell.spell_name.notin_(selected_spell_ids), class_col == True, Spell.level == level, Spell.school == school)
                 .order_by(db.func.random())
-                .limit(number)
+                .limit(remaining_needed)
                 .all()
-        )
+                )
+                
+                results.extend(no_damage_query)
+
+                selected_spell_ids.extend([spell.spell_name for spell in no_damage_query])
+
+
+
+        if len(results) < number: # Remove school filter to populate with random spells from that class
+              remaining_needed = number - len(results)
+              remaining_query = (Spell.query
+                .filter(Spell.spell_name.notin_(selected_spell_ids), class_col == True, Spell.level == level)
+                .order_by(db.func.random())
+                .limit(remaining_needed)
+                .all()
+                )
+              results.extend(remaining_query)
+
+        return results[:number]
