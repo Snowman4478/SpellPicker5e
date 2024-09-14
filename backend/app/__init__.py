@@ -16,7 +16,7 @@ def create_app():
     CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}})
 
     with app.app_context():
-        from .models import Spell
+        from . import models, routes
         db.create_all()
     
 
