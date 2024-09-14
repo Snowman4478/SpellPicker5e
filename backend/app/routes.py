@@ -1,6 +1,6 @@
-from flask import render_template, url_for, flash, redirect, current_app as app
+from flask import render_template, url_for, flash, redirect, request, current_app as app
 from app import db
-#from app.forms import CharCreateForm
+from .spells_logic import generate_spells
 
 @app.route("/")
 @app.route("/home", methods=['GET'])
@@ -12,18 +12,18 @@ def home():
 def about():
     return render_template('about.html')
 
-""" @app.route("/char-create", methods=['GET', 'POST'])
-def charcreate():
-    form = CharCreateForm()
-    if form.validate_on_submit():
-        flash(f'Created Chracter!', 'success')
-        return redirect(url_for('created'))
-    return render_template('charcreate.html', title='Create Character', form=form) """
+@app.route("/spell-picker", methods=['POST'])
+def spell_picker():
+    return render_template('spell_picker.html')
 
-@app.route("/random-char")
-def randomchar():
-    return render_template('randomchar.html')
+@app.route("/spell-picker/process", methods=['POST'])
+def spell_picker_process():
+    data = request.get_json()
+    class_type = data.get('class_type')
+    level = data.get('level')
+    school = data.get('school', None)
+    damage_type = data.get('damage_type', None)
 
-@app.route("/created")
-def created():
-    return render_template('created.html')
+    generated_spells = generate_spells(class_type, level, damage_type, school)
+
+    return generated_spells

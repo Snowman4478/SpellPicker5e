@@ -60,4 +60,3 @@ def generate_spells(class_type, level, damage_type=None, school=None):
     return spells
 
 
-print(generate_spells('sorceror', 1))
