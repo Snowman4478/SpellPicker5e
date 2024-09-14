@@ -42,7 +42,7 @@ def get_random_themed_spells(class_type, level, number, damage_type=None, school
               damage_query = query  #if no damage type then its just the prev query
 
 
-        results = damage_query.all()   # our spells
+        results = damage_query.order_by(db.func.random()).all()   # our spells
 
         
 
