@@ -23,7 +23,7 @@ def get_random_spells(class_type, level, number):
         
 
 #Get random spells with a theme of a certain level
-def get_random_themed_spells(class_type, level, number, damage_type=None, school=None):
+def get_random_themed_spells(class_type, level, number, damage_type='', school=''):
 
     with app.app_context():
 
@@ -31,11 +31,11 @@ def get_random_themed_spells(class_type, level, number, damage_type=None, school
 
         query = Spell.query.filter(class_col == True, Spell.level == level)  # filtering by class and level (needed)
 
-        if school != None:
+        if school != '':
                 query = query.filter(Spell.school == school)   # school of magic filter
         
 
-        if damage_type != None:
+        if damage_type != '':
                 damage_type = damage_type.capitalize()
                 damage_query = query.filter(Spell.damage_type.contains(damage_type)) # filtering by damage type
         else:
@@ -43,7 +43,6 @@ def get_random_themed_spells(class_type, level, number, damage_type=None, school
 
 
         results = damage_query.order_by(db.func.random()).all()   # our spells
-
         
 
         # Store ids of already selected spells

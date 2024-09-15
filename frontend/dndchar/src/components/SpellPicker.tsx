@@ -1,6 +1,14 @@
 import React, { useState } from "react";
+import '../styles/SpellPicker.css';
 
 const SpellPickerForm:  React.FC = () => {
+  interface Spell {
+    spell_name: string;
+    level: number;
+    school: string;
+    damage_type?: string;
+  }
+
   const [spellPickerData, setSpellPickerData] = useState({
     class_type: "",
     level: "",
@@ -8,8 +16,8 @@ const SpellPickerForm:  React.FC = () => {
     damage_type: "",
   });
   const [errors, setErrors] = useState<{ [key: string]: string }>({})
-  const [spells, setSpells] = useState(null);
-  const [submitted, setSubmitted] = useState(false); // To track if the form was submitted
+  const [spells, setSpells] =  useState<{ [index: string]: Spell[] }>({});
+  const [submitted, setSubmitted] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
     setSpellPickerData({ ...spellPickerData, [e.target.name]: e.target.value });
@@ -42,7 +50,6 @@ const SpellPickerForm:  React.FC = () => {
     // Clear errors
     setErrors({});
 
-
     const response = await fetch("http://localhost:5000/spell-picker/process", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -51,14 +58,13 @@ const SpellPickerForm:  React.FC = () => {
 
     if (response.ok) {
       const data = await response.json();
-      // Redirect to the new page with data
       setSpells(data)
       setSubmitted(true)
     }
   };
 
   return (
-    <div>
+    <div className="spell-picker">
         <form onSubmit={handleSubmit}>
             <select name="class_type" value={spellPickerData.class_type} onChange={handleChange}>
                 <option value="">Select Class</option>
@@ -114,10 +120,23 @@ const SpellPickerForm:  React.FC = () => {
             <button type="submit">Submit</button>
         </form>
 
-        {submitted && spells && (
-            <div>
-                <p>{spells}</p>
-            </div>
+        {submitted && (
+          <div className="spell-results">
+            {Object.keys(spells).map((level) => (
+              <div key={level} className="spell-section">
+                {level === '0' ? (
+                  <h3 className="spell-header special-header">Cantrips:</h3>
+                ) : (
+                <h3 className="spell-header">Spell Level {level}:</h3>
+                )}
+                <ul className="spell-list">
+                  {spells[level].map((spell) => (
+                    <li key={spell.spell_name} className="spell-item">{spell.spell_name}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
         )}
     </div>
   );

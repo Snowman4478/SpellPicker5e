@@ -18,12 +18,23 @@ def spell_picker():
 
 @app.route("/spell-picker/process", methods=['POST'])
 def spell_picker_process():
-    data = request.get_json()
-    class_type = data.get('class_type')
-    level = data.get('level')
-    school = data.get('school', None)
-    damage_type = data.get('damage_type', None)
+    try:
+        data = request.get_json()
+        class_type = data.get('class_type')
+        level = data.get('level')
+        school = data.get('school', None)
+        damage_type = data.get('damage_type', None)
 
-    generated_spells = generate_spells(class_type, level, damage_type, school)
+        generated_spells = generate_spells(class_type, level, damage_type, school)
 
-    return generated_spells
+        # Convert all Spell objects to dictionaries
+        serialized_data = {
+            index: [spell.to_dict() for spell in spell_list]
+            for index, spell_list in generated_spells.items()
+        }
+
+        return serialized_data
+    
+    except Exception as e:
+        print(f"Error occurred: {e}")
+        return {"error": "An error occurred on the server."}
