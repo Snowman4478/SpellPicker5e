@@ -33,6 +33,8 @@ def generate_numb_spells_per_level(highest_spell_slot, numb_of_spells):
 
 def generate_spells(class_type, level, damage_type=None, school=None):
 
+    level = int(level)
+
     if not 0 < level < 21:
         raise ValueError("Level must be a valid level (1-20)")
     
@@ -60,4 +62,3 @@ def generate_spells(class_type, level, damage_type=None, school=None):
     return spells
 
 
-print(generate_spells('sorceror', 1))

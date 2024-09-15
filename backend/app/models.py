@@ -34,3 +34,36 @@ class Spell(db.Model):
 
     def __repr__(self):
         return f'<Spell {self.spell_name}>'
+    
+    def to_dict(self):
+        return {
+            "spell_name": self.spell_name,
+            "level": self.level,
+            "school": self.school,
+            "ritual": self.ritual,
+            "casting_time": self.casting_time,
+            "range": self.range,
+            "target_area": self.target_area,
+            "v": self.v,
+            "s": self.s,
+            "m": self.m,
+            "components": self.components,
+            "cost": self.cost,
+            "concentration": self.concentration,
+            "duration": self.duration,
+            "attack_saving_throw_effect": self.attack_saving_throw_effect,
+            "damage_type": self.damage_type,
+            "damage_heal": self.damage_heal,
+            "sourcebook": self.sourcebook,
+            "page_number": self.page_number,
+            "additional_detail": self.additional_detail,
+            "per_higher_spell_level": self.per_higher_spell_level,
+            "bard": self.bard,
+            "cleric": self.cleric,
+            "druid": self.druid,
+            "paladin": self.paladin,
+            "ranger": self.ranger,
+            "sorceror": self.sorceror,
+            "warlock": self.warlock,
+            "wizard": self.wizard
+        }

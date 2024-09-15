@@ -1,0 +1,33 @@
+.spell-picker {
+    display: flex;
+    flex-direction: column;
+    align-items: center;  /* Center the content */
+    text-align: left;     /* Align text to the left */
+  }
+  
+  .spell-results {
+    width: 100%;          /* Make sure results take up full width */
+    max-width: 600px;      /* Limit the width for better readability */
+  }
+  
+  .spell-header {
+    text-align: center;    /* Center the headers */
+    font-size: 1.5em;      /* Make headers a bit larger */
+    margin-bottom: 10px;
+  }
+  
+  .special-header {
+    color: #ff6347;        /* Special styling for index 0 (optional) */
+  }
+  
+  .spell-list {
+    list-style-type: none; /* Remove bullet points */
+    padding: 0;            /* Remove default padding */
+  }
+  
+  .spell-item {
+    padding-left: 20px;    /* Add left padding so text aligns nicely */
+    margin: 5px 0;         /* Add some space between items */
+    border-left: 3px solid #ccc; /* Optional: add a left border for a nice visual effect */
+  }
+  
